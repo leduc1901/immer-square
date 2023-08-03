@@ -1,5 +1,4 @@
 /* eslint-disable no-mixed-operators */
-import logo from "./logo.svg";
 import "./App.css";
 import React, { useState, useRef, useCallback } from "react";
 import { Flex } from "theme-ui";
@@ -19,9 +18,9 @@ function uuidv4() {
 
 function App() {
   const [state, setState] = useState(() => getInitialState());
+  const { boxes, selectBox } = state;
   const undoStack = useRef([]);
   const undoStackPointer = useRef(-1);
-  const { boxes, selectBox } = state;
 
   const dispatch = useCallback((action, undoable = true) => {
     setState((currentState) => {
@@ -34,7 +33,6 @@ function App() {
         undoStack.current.length = pointer;
         undoStack.current[pointer] = { patches, inversePatches };  
       }
-      
       return nextState;
     });
   }, []);
@@ -54,7 +52,6 @@ function App() {
         x: window.innerWidth * 0.8 / 2 - width / 2,
         y: window.innerHeight / 2 - height / 2,
       }
-      
     });
   };
 
@@ -67,28 +64,6 @@ function App() {
       id: null
     }, false)
   }
-
-  const moveElement = (x, y) => {
-    dispatch({
-      type: "MOVE_BOX",
-      position: {
-        x: x,
-        y: y
-      }
-    });
-  };
-
-  const resizeElement = (width, height, x, y) => {
-    dispatch({
-      type: "RESIZE_BOX",
-      width,
-      height,
-      position: {
-        x: x,
-        y: y
-      }
-    });
-  };
 
   const undoButton = () => {
     if (undoStackPointer.current < 0) return;
@@ -122,7 +97,7 @@ function App() {
         deleteButton={deleteButton}
         undoStackPointer={undoStackPointer}
       />
-      <Canvas boxes={boxes} resizeElement={resizeElement} moveElement={moveElement} dispatch={dispatch} selectedBox={selectBox}/>
+      <Canvas boxes={boxes} dispatch={dispatch} selectedBox={selectBox}/>
     </Flex>
   );
 }

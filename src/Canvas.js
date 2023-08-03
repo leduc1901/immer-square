@@ -2,13 +2,12 @@ import React, {useEffect} from "react";
 import { Box } from "theme-ui";
 import RenderBox from "./Box";
 
-const Canvas = ({ boxes, moveElement, selectedBox, dispatch, resizeElement }) => {
+const Canvas = ({ boxes, selectedBox, dispatch }) => {
   const [stateBoxes, setStateBoxes] = React.useState(boxes)
 
   useEffect(() => {
     setStateBoxes(boxes)
   }, [boxes])
-
 
   return (
     <Box
@@ -21,7 +20,7 @@ const Canvas = ({ boxes, moveElement, selectedBox, dispatch, resizeElement }) =>
       }}
     >
       {Object.values(stateBoxes).map((box) => (
-        <RenderBox box={box} dispatch={dispatch} resizeElement={resizeElement} moveElement={moveElement} selectedBox={selectedBox}/>
+        <RenderBox box={box} dispatch={dispatch} selectedBox={selectedBox}/>
       ))}
     </Box>
   );

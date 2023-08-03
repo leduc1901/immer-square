@@ -6,7 +6,6 @@ const RenderBox = ({
   dispatch,
   selectedBox,
 }) => {
-
   const ref = useRef();
   const [width, setWidth] = useState(box.width);
   const [height, setHeight] = useState(box.height);
